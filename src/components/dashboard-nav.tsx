@@ -10,7 +10,6 @@ import {
   Bell,
   Video,
   BookOpen,
-  User,
 } from "lucide-react"
 
 import {
@@ -27,7 +26,6 @@ const navItems = [
   { href: "/dashboard/medication-reminders", label: "Medication Reminders", icon: Bell },
   { href: "/dashboard/telemedicine", label: "Telemedicine", icon: Video },
   { href: "/dashboard/resource-library", label: "Resource Library", icon: BookOpen },
-  { href: "/dashboard/profile", label: "Profile", icon: User },
 ]
 
 export function DashboardNav() {
