@@ -10,6 +10,7 @@ import {
   Bell,
   Video,
   BookOpen,
+  User,
 } from "lucide-react"
 
 import {
@@ -26,6 +27,7 @@ const navItems = [
   { href: "/dashboard/medication-reminders", label: "Medication Reminders", icon: Bell },
   { href: "/dashboard/telemedicine", label: "Telemedicine", icon: Video },
   { href: "/dashboard/resource-library", label: "Resource Library", icon: BookOpen },
+  { href: "/dashboard/profile", label: "Profile", icon: User },
 ]
 
 export function DashboardNav() {
@@ -35,18 +37,16 @@ export function DashboardNav() {
     <SidebarMenu>
       {navItems.map((item) => (
         <SidebarMenuItem key={item.href}>
-          <Link href={item.href} passHref>
-            <SidebarMenuButton
-              asChild
-              isActive={pathname === item.href}
-              tooltip={item.label}
-            >
-              <>
-                <item.icon />
-                <span>{item.label}</span>
-              </>
-            </SidebarMenuButton>
-          </Link>
+          <SidebarMenuButton
+            asChild
+            isActive={pathname === item.href}
+            tooltip={item.label}
+          >
+            <Link href={item.href}>
+              <item.icon />
+              <span>{item.label}</span>
+            </Link>
+          </SidebarMenuButton>
         </SidebarMenuItem>
       ))}
     </SidebarMenu>
