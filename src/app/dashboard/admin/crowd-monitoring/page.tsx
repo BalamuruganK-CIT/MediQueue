@@ -11,7 +11,7 @@ const crowdData = [
 ]
 
 export default function CrowdMonitoringPage() {
-  const getProgressColor = (level: number) => {
+  const getIndicatorColor = (level: number) => {
     if (level > 80) return 'bg-destructive';
     if (level > 60) return 'bg-orange-500';
     return 'bg-primary';
@@ -34,7 +34,7 @@ export default function CrowdMonitoringPage() {
             <CardContent>
                 <div className="text-2xl font-bold">{data.level}% Full</div>
                 <p className="text-xs text-muted-foreground">Status: {data.status}</p>
-                <Progress value={data.level} className="mt-4 h-3" indicatorClassName={getProgressColor(data.level)} />
+                <Progress value={data.level} className="mt-4 h-3" indicatorClassName={getIndicatorColor(data.level)} />
             </CardContent>
            </Card>
         ))}
