@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -7,11 +8,13 @@ import { appointments } from "@/lib/mock-data"
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useToast } from "@/hooks/use-toast"
 
 export default function PatientAppointmentsPage() {
     const [date, setDate] = useState<Date | undefined>(new Date())
     const patientName = "John Doe" // In a real app, this would come from user session
     const patientAppointments = appointments.filter(a => a.patientName === patientName);
+    const { toast } = useToast()
 
     return (
         <div className="space-y-8">
@@ -32,7 +35,7 @@ export default function PatientAppointmentsPage() {
                             onSelect={setDate}
                             className="rounded-md border"
                         />
-                        <Button className="w-full">Book Appointment</Button>
+                        <Button className="w-full" onClick={() => toast({title: "Appointment Booked!", description: "Your appointment has been successfully scheduled."})}>Book Appointment</Button>
                     </CardContent>
                 </Card>
                  <Card>
