@@ -7,21 +7,51 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { appointments } from "@/lib/mock-data"
+import { appointments as initialAppointments, type Appointment } from "@/lib/mock-data"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
 import { Label } from "@/components/ui/label"
 
 export default function AppointmentsPage() {
+  const [appointments, setAppointments] = useState<Appointment[]>(initialAppointments)
   const [date, setDate] = useState<Date | undefined>(new Date())
+  const [selectedDoctor, setSelectedDoctor] = useState<string>("")
+  const [selectedTime, setSelectedTime] = useState<string>("")
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { toast } = useToast()
 
   const handleScheduleAppointment = () => {
+    if (!selectedDoctor || !date || !selectedTime) {
+      toast({
+        title: "Incomplete Information",
+        description: "Please select a doctor, date, and time.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    const doctorInfo = selectedDoctor.split("(")
+    const newAppointment: Appointment = {
+      id: (appointments.length + 1).toString(),
+      doctor: doctorInfo[0].trim(),
+      specialty: doctorInfo[1].replace(")", "").trim(),
+      date: date.toISOString().split("T")[0],
+      time: selectedTime,
+      status: "Upcoming",
+    }
+
+    setAppointments((prev) => [...prev, newAppointment].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()))
+    
     toast({
       title: "Appointment Scheduled!",
       description: "Your appointment has been successfully booked.",
       className: "bg-accent text-accent-foreground border-accent",
     })
+
+    // Reset form and close dialog
+    setSelectedDoctor("")
+    setSelectedTime("")
+    setIsDialogOpen(false)
   }
 
   return (
@@ -47,7 +77,7 @@ export default function AppointmentsPage() {
                   <TableRow key={appt.id}>
                     <TableCell className="font-medium">{appt.doctor}</TableCell>
                     <TableCell>{appt.specialty}</TableCell>
-                    <TableCell>{appt.date} at {appt.time}</TableCell>
+                    <TableCell>{new Date(appt.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric'})} at {appt.time}</TableCell>
                     <TableCell>
                       <Badge variant={appt.status === 'Upcoming' ? 'default' : appt.status === 'Completed' ? 'secondary' : 'destructive'}>
                         {appt.status}
@@ -77,9 +107,9 @@ export default function AppointmentsPage() {
             />
           </CardContent>
         </Card>
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="w-full" size="lg">Schedule New Appointment</Button>
+            <Button className="w-full" size="lg" onClick={() => setIsDialogOpen(true)}>Schedule New Appointment</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -89,14 +119,14 @@ export default function AppointmentsPage() {
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="doctor" className="text-right">Doctor</Label>
-                <Select>
+                <Select onValueChange={setSelectedDoctor} value={selectedDoctor}>
                     <SelectTrigger className="col-span-3">
                         <SelectValue placeholder="Select a doctor" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="evelyn_reed">Dr. Evelyn Reed (Cardiology)</SelectItem>
-                        <SelectItem value="marcus_holloway">Dr. Marcus Holloway (Neurology)</SelectItem>
-                        <SelectItem value="lena_petrova">Dr. Lena Petrova (Dermatology)</SelectItem>
+                        <SelectItem value="Dr. Evelyn Reed (Cardiology)">Dr. Evelyn Reed (Cardiology)</SelectItem>
+                        <SelectItem value="Dr. Marcus Holloway (Neurology)">Dr. Marcus Holloway (Neurology)</SelectItem>
+                        <SelectItem value="Dr. Lena Petrova (Dermatology)">Dr. Lena Petrova (Dermatology)</SelectItem>
                     </SelectContent>
                 </Select>
               </div>
@@ -106,15 +136,15 @@ export default function AppointmentsPage() {
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="time" className="text-right">Time</Label>
-                <Select>
+                <Select onValueChange={setSelectedTime} value={selectedTime}>
                     <SelectTrigger className="col-span-3">
                         <SelectValue placeholder="Select a time slot" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="1000">10:00 AM</SelectItem>
-                        <SelectItem value="1100">11:00 AM</SelectItem>
-                        <SelectItem value="1400">02:00 PM</SelectItem>
-                        <SelectItem value="1500">03:00 PM</SelectItem>
+                        <SelectItem value="10:00 AM">10:00 AM</SelectItem>
+                        <SelectItem value="11:00 AM">11:00 AM</SelectItem>
+                        <SelectItem value="02:00 PM">02:00 PM</SelectItem>
+                        <SelectItem value="03:00 PM">03:00 PM</SelectItem>
                     </SelectContent>
                 </Select>
               </div>

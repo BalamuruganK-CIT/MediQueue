@@ -8,9 +8,9 @@ export type Appointment = {
 };
 
 export const appointments: Appointment[] = [
-  { id: '1', doctor: 'Dr. Evelyn Reed', specialty: 'Cardiology', date: '2024-08-15', time: '10:00 AM', status: 'Upcoming' },
-  { id: '2', doctor: 'Dr. Marcus Holloway', specialty: 'Neurology', date: '2024-08-18', time: '02:30 PM', status: 'Upcoming' },
-  { id: '3', doctor: 'Dr. Lena Petrova', specialty: 'Dermatology', date: '2024-07-20', time: '11:00 AM', status: 'Completed' },
+  { id: '1', doctor: 'Dr. Evelyn Reed', specialty: 'Cardiology', date: '2025-09-20', time: '10:00 AM', status: 'Upcoming' },
+  { id: '2', doctor: 'Dr. Marcus Holloway', specialty: 'Neurology', date: '2025-09-22', time: '02:30 PM', status: 'Upcoming' },
+  { id: '3', doctor: 'Dr. Lena Petrova', specialty: 'Dermatology', date: '2025-08-10', time: '11:00 AM', status: 'Completed' },
 ];
 
 export type Prescription = {
