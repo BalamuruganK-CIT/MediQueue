@@ -38,8 +38,8 @@ export function UserNav() {
           <DropdownMenuItem asChild>
             <Link href="/dashboard/settings">Profile</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Billing
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/billing">Billing</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
              <Link href="/dashboard/settings">Settings</Link>

@@ -83,3 +83,28 @@ export const resourceLibrary: Resource[] = [
   { id: 'r5', title: 'The Importance of Sleep', description: 'Discover how sleep affects your overall health.', category: 'Article', imageUrl: 'https://picsum.photos/600/400', link: '#' },
   { id: 'r6', title: 'Guided Meditation for Anxiety', description: 'A 10-minute guided meditation to calm your mind.', category: 'Video', imageUrl: 'https://picsum.photos/600/400', link: '#' },
 ];
+
+export type BillingHistory = {
+  id: string;
+  invoiceId: string;
+  date: string;
+  amount: string;
+  status: 'Paid' | 'Due';
+};
+
+export const billingHistory: BillingHistory[] = [
+    { id: 'bh1', invoiceId: 'INV-2024001', date: '2024-08-15', amount: '$150.00', status: 'Paid' },
+    { id: 'bh2', invoiceId: 'INV-2024002', date: '2024-07-20', amount: '$75.00', status: 'Paid' },
+    { id: 'bh3', invoiceId: 'INV-2024003', date: '2024-06-10', amount: '$250.00', status: 'Paid' },
+];
+
+export type PaymentMethod = {
+    id: string;
+    cardType: string;
+    last4: string;
+    expiry: string;
+};
+
+export const paymentMethods: PaymentMethod[] = [
+    { id: 'pm1', cardType: 'Visa', last4: '4242', expiry: '12/26' },
+];

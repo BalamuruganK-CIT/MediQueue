@@ -10,6 +10,7 @@ import {
   Bell,
   Video,
   BookOpen,
+  CreditCard,
 } from "lucide-react"
 
 import {
@@ -25,6 +26,7 @@ const navItems = [
   { href: "/dashboard/health-records", label: "Health Records", icon: History },
   { href: "/dashboard/medication-reminders", label: "Medication Reminders", icon: Bell },
   { href: "/dashboard/telemedicine", label: "Telemedicine", icon: Video },
+  { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
   { href: "/dashboard/resource-library", label: "Resource Library", icon: BookOpen },
 ]
 
