@@ -44,7 +44,7 @@ export default function AppointmentsPage() {
     
     toast({
       title: "Appointment Scheduled!",
-      description: "Your appointment has been successfully booked.",
+      description: "A confirmation email has been sent to your registered address.",
       className: "bg-accent text-accent-foreground border-accent",
     })
 
