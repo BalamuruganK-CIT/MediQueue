@@ -123,7 +123,7 @@ export default function SettingsPage() {
                       <FormItem>
                         <FormLabel>Phone Number (Optional)</FormLabel>
                         <FormControl>
-                          <Input placeholder="Your phone number" {...field} />
+                          <Input placeholder="Your phone number" {...field} value={field.value ?? ""} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -136,7 +136,7 @@ export default function SettingsPage() {
                       <FormItem>
                         <FormLabel>Address (Optional)</FormLabel>
                         <FormControl>
-                          <Input placeholder="Your home address" {...field} />
+                          <Input placeholder="Your home address" {...field} value={field.value ?? ""} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -240,5 +240,3 @@ export default function SettingsPage() {
     </div>
   )
 }
-
-    
