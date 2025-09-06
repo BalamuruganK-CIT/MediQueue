@@ -1,6 +1,21 @@
+
+export type Doctor = {
+  id: string;
+  name: string;
+  specialization: string;
+}
+
+export const doctors: Doctor[] = [
+  { id: 'doc1', name: 'Dr. Evelyn Reed', specialization: 'Cardiology' },
+  { id: 'doc2', name: 'Dr. Marcus Thorne', specialization: 'Neurology' },
+  { id: 'doc3', name: 'Dr. Samantha Cruz', specialization: 'Pediatrics' },
+]
+
+
 export type Appointment = {
   id: string;
   patientName: string;
+  doctorId: string;
   age: number;
   gender: 'Male' | 'Female' | 'Other';
   date: string;
@@ -9,11 +24,11 @@ export type Appointment = {
 };
 
 export const appointments: Appointment[] = [
-  { id: '1', patientName: 'John Doe', age: 45, gender: 'Male', date: '2025-09-20', time: '10:00 AM', status: 'Pending' },
-  { id: '2', patientName: 'Jane Smith', age: 34, gender: 'Female', date: '2025-09-20', time: '11:00 AM', status: 'Accepted' },
-  { id: '3', patientName: 'Robert Brown', age: 52, gender: 'Male', date: '2025-09-21', time: '09:00 AM', status: 'Pending' },
-  { id: '4', patientName: 'Emily White', age: 28, gender: 'Female', date: '2025-09-21', time: '10:30 AM', status: 'Completed' },
-  { id: '5', patientName: 'Michael Green', age: 61, gender: 'Male', date: '2025-09-22', time: '02:30 PM', status: 'Rejected' },
+  { id: '1', patientName: 'John Doe', doctorId: 'doc1', age: 45, gender: 'Male', date: '2025-09-20', time: '10:00 AM', status: 'Pending' },
+  { id: '2', patientName: 'Jane Smith', doctorId: 'doc2', age: 34, gender: 'Female', date: '2025-09-20', time: '11:00 AM', status: 'Accepted' },
+  { id: '3', patientName: 'Robert Brown', doctorId: 'doc1', age: 52, gender: 'Male', date: '2025-09-21', time: '09:00 AM', status: 'Pending' },
+  { id: '4', patientName: 'Emily White', doctorId: 'doc3', age: 28, gender: 'Female', date: '2025-09-21', time: '10:30 AM', status: 'Completed' },
+  { id: '5', patientName: 'Michael Green', doctorId: 'doc2', age: 61, gender: 'Male', date: '2025-09-22', time: '02:30 PM', status: 'Rejected' },
 ];
 
 

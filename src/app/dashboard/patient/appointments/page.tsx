@@ -4,14 +4,17 @@
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { appointments as initialAppointments, type Appointment } from "@/lib/mock-data"
+import { appointments as initialAppointments, doctors, type Appointment } from "@/lib/mock-data"
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useToast } from "@/hooks/use-toast"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
 
 export default function PatientAppointmentsPage() {
     const [date, setDate] = useState<Date | undefined>(new Date())
+    const [selectedDoctor, setSelectedDoctor] = useState<string>("")
     const patientName = "John Doe" // In a real app, this would come from user session
     const [patientAppointments, setPatientAppointments] = useState<Appointment[]>(
         initialAppointments.filter(a => a.patientName === patientName)
@@ -27,10 +30,19 @@ export default function PatientAppointmentsPage() {
             });
             return;
         }
+        if (!selectedDoctor) {
+            toast({
+                title: "No Doctor Selected",
+                description: "Please select a doctor for your appointment.",
+                variant: "destructive"
+            });
+            return;
+        }
 
         const newAppointment: Appointment = {
             id: `appt-${Date.now()}`,
             patientName: patientName,
+            doctorId: selectedDoctor,
             age: 35, // This would be dynamic in a real app
             gender: 'Male', // This would be dynamic in a real app
             date: date.toISOString().split('T')[0],
@@ -42,7 +54,7 @@ export default function PatientAppointmentsPage() {
 
         toast({
             title: "Appointment Booked!", 
-            description: "Your appointment has been successfully scheduled and is pending confirmation."
+            description: "Your appointment request has been sent and is pending confirmation."
         });
     };
 
@@ -56,14 +68,29 @@ export default function PatientAppointmentsPage() {
                 <Card>
                     <CardHeader>
                         <CardTitle>Schedule a New Appointment</CardTitle>
-                        <CardDescription>Select a date and time that works for you.</CardDescription>
+                        <CardDescription>Select a doctor and a date that works for you.</CardDescription>
                     </CardHeader>
-                    <CardContent className="flex flex-col items-center gap-4">
+                    <CardContent className="flex flex-col gap-4">
+                         <div className="space-y-2">
+                            <Label>Select Doctor</Label>
+                            <Select onValueChange={setSelectedDoctor} value={selectedDoctor}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Choose a doctor" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {doctors.map(doc => (
+                                        <SelectItem key={doc.id} value={doc.id}>
+                                            {doc.name} - {doc.specialization}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
                         <Calendar
                             mode="single"
                             selected={date}
                             onSelect={setDate}
-                            className="rounded-md border"
+                            className="rounded-md border self-center"
                             disabled={(d) => d < new Date(new Date().setDate(new Date().getDate() - 1))}
                         />
                         <Button className="w-full" onClick={handleBookAppointment}>Book Appointment</Button>
@@ -88,7 +115,7 @@ export default function PatientAppointmentsPage() {
                                     <TableRow key={appt.id}>
                                         <TableCell>{new Date(appt.date).toLocaleDateString()}</TableCell>
                                         <TableCell>{appt.time}</TableCell>
-                                        <TableCell><Badge variant={appt.status === 'Accepted' ? 'default' : 'outline'}>{appt.status}</Badge></TableCell>
+                                        <TableCell><Badge variant={appt.status === 'Accepted' ? 'default' : appt.status === 'Pending' ? 'outline' : 'destructive'}>{appt.status}</Badge></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
