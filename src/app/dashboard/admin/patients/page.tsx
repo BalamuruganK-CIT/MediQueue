@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -11,6 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import { patients } from "@/lib/mock-data"
 import { PlusCircle, MoreHorizontal } from "lucide-react"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
+import Link from "next/link"
 
 export default function PatientsPage() {
   return (
@@ -20,9 +22,11 @@ export default function PatientsPage() {
           <h1 className="text-3xl font-bold tracking-tight">Patient Management</h1>
           <p className="text-muted-foreground">View and manage all patient records.</p>
         </div>
-        <Button>
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Add New Patient
+        <Button asChild>
+          <Link href="/register">
+            <PlusCircle className="mr-2 h-4 w-4" />
+            Add New Patient
+          </Link>
         </Button>
       </div>
       
