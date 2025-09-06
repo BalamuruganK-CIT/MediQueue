@@ -1,0 +1,80 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check the user's role from custom claims.
+    function getRole() {
+      return request.auth.token.role;
+    }
+
+    // Helper function to check if a user is authenticated.
+    function isSignedIn() {
+      return request.auth != null && request.auth.uid != null;
+    }
+
+    // Users Collection
+    // - Patients/Doctors can read/write their own profile.
+    // - Admins can read/write any profile.
+    match /users/{userId} {
+      allow read, write: if isSignedIn() && (request.auth.uid == userId || getRole() == 'admin');
+    }
+
+    // Appointments Collection
+    // - Patients can create their own appointments.
+    // - Patients can only read their own appointments.
+    // - Doctors can read appointments assigned to them and update the status.
+    // - Admins have full read/write access.
+    match /appointments/{appointmentId} {
+      allow read: if isSignedIn() && 
+                    (resource.data.patientId == request.auth.uid || 
+                     resource.data.doctorId == request.auth.uid || 
+                     getRole() == 'admin');
+
+      allow create: if isSignedIn() && 
+                      (request.resource.data.patientId == request.auth.uid) &&
+                      'patientId' in request.resource.data &&
+                      'doctorId' in request.resource.data &&
+                      'date' in request.resource.data &&
+                      'time' in request.resource.data &&
+                      'status' in request.resource.data;
+
+      allow update: if isSignedIn() &&
+                      ((getRole() == 'doctor' && resource.data.doctorId == request.auth.uid && request.resource.data.keys().hasOnly(['status'])) ||
+                       getRole() == 'admin');
+                       
+      allow delete: if isSignedIn() && getRole() == 'admin';
+    }
+
+    // Prescriptions Collection
+    // - Doctors can create prescriptions for their patients.
+    // - Patients can read their own prescriptions.
+    // - Admins have full access.
+    match /prescriptions/{prescriptionId} {
+      allow read: if isSignedIn() && 
+                    (resource.data.patientId == request.auth.uid || 
+                     getRole() == 'doctor' || 
+                     getRole() == 'admin');
+                     
+      allow create: if isSignedIn() && (getRole() == 'doctor' || getRole() == 'admin') &&
+                      'patientId' in request.resource.data &&
+                      'doctorId' in request.resource.data &&
+                      'medication' in request.resource.data &&
+                      'dosage' in request.resource.data &&
+                      'dateIssued' in request.resource.data;
+                      
+      allow write: if isSignedIn() && getRole() == 'admin';
+    }
+
+    // Notifications Collection
+    // - Users can only read their own notifications.
+    // - Only the system (Cloud Functions) can create notifications.
+    // - Admins can read all notifications.
+    match /notifications/{notificationId} {
+      allow read: if isSignedIn() && 
+                    (resource.data.userId == request.auth.uid || 
+                     getRole() == 'admin');
+      allow write: if false; // Disallow client-side writes completely
+    }
+  }
+}
