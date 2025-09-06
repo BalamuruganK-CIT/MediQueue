@@ -4,7 +4,7 @@
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { appointments } from "@/lib/mock-data"
+import { appointments as initialAppointments, type Appointment } from "@/lib/mock-data"
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -13,8 +13,38 @@ import { useToast } from "@/hooks/use-toast"
 export default function PatientAppointmentsPage() {
     const [date, setDate] = useState<Date | undefined>(new Date())
     const patientName = "John Doe" // In a real app, this would come from user session
-    const patientAppointments = appointments.filter(a => a.patientName === patientName);
+    const [patientAppointments, setPatientAppointments] = useState<Appointment[]>(
+        initialAppointments.filter(a => a.patientName === patientName)
+    );
     const { toast } = useToast()
+
+    const handleBookAppointment = () => {
+        if (!date) {
+            toast({
+                title: "No Date Selected",
+                description: "Please select a date for your appointment.",
+                variant: "destructive"
+            });
+            return;
+        }
+
+        const newAppointment: Appointment = {
+            id: `appt-${Date.now()}`,
+            patientName: patientName,
+            age: 35, // This would be dynamic in a real app
+            gender: 'Male', // This would be dynamic in a real app
+            date: date.toISOString().split('T')[0],
+            time: '12:00 PM', // Placeholder time
+            status: 'Pending'
+        };
+
+        setPatientAppointments(prev => [...prev, newAppointment]);
+
+        toast({
+            title: "Appointment Booked!", 
+            description: "Your appointment has been successfully scheduled and is pending confirmation."
+        });
+    };
 
     return (
         <div className="space-y-8">
@@ -34,8 +64,9 @@ export default function PatientAppointmentsPage() {
                             selected={date}
                             onSelect={setDate}
                             className="rounded-md border"
+                            disabled={(d) => d < new Date(new Date().setDate(new Date().getDate() - 1))}
                         />
-                        <Button className="w-full" onClick={() => toast({title: "Appointment Booked!", description: "Your appointment has been successfully scheduled."})}>Book Appointment</Button>
+                        <Button className="w-full" onClick={handleBookAppointment}>Book Appointment</Button>
                     </CardContent>
                 </Card>
                  <Card>
