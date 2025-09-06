@@ -48,3 +48,18 @@ export const patients: Patient[] = [
   { id: 'pt4', name: 'Robert Brown', age: 52, gender: 'Male', lastVisit: '2023-11-12', status: 'Inactive' },
   { id: 'pt5', name: 'Jessica Davis', age: 41, gender: 'Female', lastVisit: '2024-08-15', status: 'Active' },
 ];
+
+export type Billing = {
+  id: string;
+  service: string;
+  date: string;
+  amount: number;
+  status: 'Paid' | 'Pending' | 'Overdue';
+};
+
+export const billingHistory: Billing[] = [
+  { id: 'b1', service: 'Consultation', date: '2024-07-20', amount: 150, status: 'Paid' },
+  { id: 'b2', service: 'X-Ray', date: '2024-07-20', amount: 300, status: 'Paid' },
+  { id: 'b3', service: 'Blood Test', date: '2024-08-01', amount: 120, status: 'Pending' },
+  { id: 'b4', service: 'Annual Checkup', date: '2023-11-12', amount: 200, status: 'Overdue' },
+];

@@ -8,7 +8,8 @@ import {
   FileText,
   Users,
   Settings,
-  BellRing
+  BellRing,
+  CreditCard
 } from "lucide-react"
 
 import {
@@ -34,6 +35,7 @@ const patientNavItems = [
     { href: "/dashboard?role=patient", label: "Dashboard", icon: LayoutDashboard },
     { href: "/dashboard/patient/appointments?role=patient", label: "Appointments", icon: Calendar },
     { href: "/dashboard/patient/prescriptions?role=patient", label: "Prescriptions", icon: FileText },
+    { href: "/dashboard/patient/billing?role=patient", label: "Billing", icon: CreditCard },
     { href: "/dashboard/patient/medication-reminders?role=patient", label: "Reminders", icon: BellRing },
 ]
 
