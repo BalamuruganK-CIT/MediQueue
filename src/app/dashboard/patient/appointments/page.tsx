@@ -105,19 +105,24 @@ export default function PatientAppointmentsPage() {
                         <Table>
                              <TableHeader>
                                 <TableRow>
+                                    <TableHead>Doctor</TableHead>
                                     <TableHead>Date</TableHead>
                                     <TableHead>Time</TableHead>
                                     <TableHead>Status</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {patientAppointments.map(appt => (
-                                    <TableRow key={appt.id}>
-                                        <TableCell>{new Date(appt.date).toLocaleDateString()}</TableCell>
-                                        <TableCell>{appt.time}</TableCell>
-                                        <TableCell><Badge variant={appt.status === 'Accepted' ? 'default' : appt.status === 'Pending' ? 'outline' : 'destructive'}>{appt.status}</Badge></TableCell>
-                                    </TableRow>
-                                ))}
+                                {patientAppointments.map(appt => {
+                                    const doctor = doctors.find(doc => doc.id === appt.doctorId);
+                                    return (
+                                        <TableRow key={appt.id}>
+                                            <TableCell>{doctor ? doctor.name : 'N/A'}</TableCell>
+                                            <TableCell>{new Date(appt.date).toLocaleDateString()}</TableCell>
+                                            <TableCell>{appt.time}</TableCell>
+                                            <TableCell><Badge variant={appt.status === 'Accepted' ? 'default' : appt.status === 'Pending' ? 'outline' : 'destructive'}>{appt.status}</Badge></TableCell>
+                                        </TableRow>
+                                    )
+                                })}
                             </TableBody>
                         </Table>
                     </CardContent>
