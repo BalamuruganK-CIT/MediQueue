@@ -149,7 +149,7 @@ export default function SettingsPage() {
           </Card>
         </TabsContent>
         <TabsContent value="notifications">
-           <Form {...dummyForm}>
+          <Form {...dummyForm}>
             <Card>
               <CardHeader>
                 <CardTitle>Notifications</CardTitle>
@@ -189,20 +189,6 @@ export default function SettingsPage() {
                 <CardDescription>Customize your experience within the app.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-8">
-                  <div className="space-y-2">
-                      <Label>Theme</Label>
-                      <Select defaultValue="light">
-                          <SelectTrigger>
-                              <SelectValue placeholder="Select a theme" />
-                          </SelectTrigger>
-                          <SelectContent>
-                              <SelectItem value="light">Light</SelectItem>
-                              <SelectItem value="dark">Dark</SelectItem>
-                              <SelectItem value="system">System</SelectItem>
-                          </SelectContent>
-                      </Select>
-                      <p className="text-sm text-muted-foreground">Choose how you want the app to look.</p>
-                  </div>
                    <div className="space-y-2">
                       <Label>Language</Label>
                       <Select defaultValue="en">
