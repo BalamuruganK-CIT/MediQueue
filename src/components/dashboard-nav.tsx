@@ -29,7 +29,6 @@ const adminNavItems = [
   { href: "/dashboard?role=admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/admin/crowd-monitoring?role=admin", label: "Crowd Monitoring", icon: Users },
   { href: "/dashboard/admin/patients?role=admin", label: "Patients", icon: Users },
-  { href: "/dashboard/admin/settings?role=admin", label: "Settings", icon: Settings },
 ]
 
 const patientNavItems = [

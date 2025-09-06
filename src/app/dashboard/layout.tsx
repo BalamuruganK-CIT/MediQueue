@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button"
 import { LifeBuoy, Settings } from "lucide-react"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 
 function Logo() {
   return (
@@ -35,6 +37,21 @@ function Logo() {
   )
 }
 
+function SettingsLink() {
+    const searchParams = useSearchParams();
+    const role = searchParams.get('role');
+    const settingsPath = role ? `/dashboard/${role}/settings?role=${role}` : '/dashboard/patient/settings?role=patient';
+
+    return (
+        <Button variant="ghost" className="w-full justify-start gap-2" asChild>
+            <Link href={settingsPath}>
+                <Settings className="h-4 w-4" />
+                <span>Settings</span>
+            </Link>
+        </Button>
+    )
+}
+
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
@@ -50,12 +67,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <LifeBuoy className="h-4 w-4" />
             <span>Support</span>
           </Button>
-          <Button variant="ghost" className="w-full justify-start gap-2" asChild>
-            <Link href="/dashboard/settings">
-                <Settings className="h-4 w-4" />
-                <span>Settings</span>
-            </Link>
-          </Button>
+          <Suspense fallback={<div className="h-9 w-full rounded-md animate-pulse bg-muted" />}>
+            <SettingsLink />
+          </Suspense>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
