@@ -54,6 +54,9 @@ export default function SettingsPage() {
     })
   }
 
+  // Dummy form for notifications and preferences to provide context
+  const dummyForm = useForm()
+
   return (
     <div className="space-y-8">
       <div>
@@ -144,88 +147,92 @@ export default function SettingsPage() {
           </Card>
         </TabsContent>
         <TabsContent value="notifications">
-          <Card>
-            <CardHeader>
-              <CardTitle>Notifications</CardTitle>
-              <CardDescription>Manage how you receive notifications from MediTrack.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-                <div className="flex flex-row items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                        <FormLabel className="text-base">Email Notifications</FormLabel>
-                        <FormDescription>Receive updates about appointments and reminders via email.</FormDescription>
-                    </div>
-                    <Switch />
-                </div>
-                 <div className="flex flex-row items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                        <FormLabel className="text-base">Push Notifications</FormLabel>
-                        <FormDescription>Get real-time alerts on your mobile device.</FormDescription>
-                    </div>
-                    <Switch defaultChecked/>
-                </div>
-                 <div className="flex flex-row items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                        <FormLabel className="text-base">Monthly Newsletter</FormLabel>
-                        <FormDescription>Stay up-to-date with the latest health news and tips.</FormDescription>
-                    </div>
-                    <Switch />
-                </div>
-            </CardContent>
-          </Card>
+           <Form {...dummyForm}>
+            <Card>
+              <CardHeader>
+                <CardTitle>Notifications</CardTitle>
+                <CardDescription>Manage how you receive notifications from MediTrack.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                  <div className="flex flex-row items-center justify-between rounded-lg border p-4">
+                      <div className="space-y-0.5">
+                          <FormLabel className="text-base">Email Notifications</FormLabel>
+                          <FormDescription>Receive updates about appointments and reminders via email.</FormDescription>
+                      </div>
+                      <Switch />
+                  </div>
+                   <div className="flex flex-row items-center justify-between rounded-lg border p-4">
+                      <div className="space-y-0.5">
+                          <FormLabel className="text-base">Push Notifications</FormLabel>
+                          <FormDescription>Get real-time alerts on your mobile device.</FormDescription>
+                      </div>
+                      <Switch defaultChecked/>
+                  </div>
+                   <div className="flex flex-row items-center justify-between rounded-lg border p-4">
+                      <div className="space-y-0.5">
+                          <FormLabel className="text-base">Monthly Newsletter</FormLabel>
+                          <FormDescription>Stay up-to-date with the latest health news and tips.</FormDescription>
+                      </div>
+                      <Switch />
+                  </div>
+              </CardContent>
+            </Card>
+          </Form>
         </TabsContent>
          <TabsContent value="preferences">
-          <Card>
-            <CardHeader>
-              <CardTitle>Preferences</CardTitle>
-              <CardDescription>Customize your experience within the app.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-8">
-                <div className="space-y-2">
-                    <Label>Theme</Label>
-                    <Select defaultValue="light">
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select a theme" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="light">Light</SelectItem>
-                            <SelectItem value="dark">Dark</SelectItem>
-                            <SelectItem value="system">System</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <p className="text-sm text-muted-foreground">Choose how you want the app to look.</p>
-                </div>
-                 <div className="space-y-2">
-                    <Label>Language</Label>
-                    <Select defaultValue="en">
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select a language" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="en">English (United States)</SelectItem>
-                            <SelectItem value="es">Español (España)</SelectItem>
-                            <SelectItem value="fr">Français (France)</SelectItem>
-                        </SelectContent>
-                    </Select>
-                     <p className="text-sm text-muted-foreground">Select your preferred language for the app.</p>
-                </div>
-                <div className="space-y-4">
-                    <Label>Reminder Preferences</Label>
-                     <div className="flex items-center space-x-2">
-                        <Checkbox id="rem_before_30" defaultChecked/>
-                        <label htmlFor="rem_before_30" className="text-sm font-medium leading-none">30 minutes before appointment</label>
-                    </div>
-                     <div className="flex items-center space-x-2">
-                        <Checkbox id="rem_before_60" />
-                        <label htmlFor="rem_before_60" className="text-sm font-medium leading-none">1 hour before appointment</label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <Checkbox id="rem_before_day" defaultChecked />
-                        <label htmlFor="rem_before_day" className="text-sm font-medium leading-none">1 day before appointment</label>
-                    </div>
-                </div>
-            </CardContent>
-          </Card>
+          <Form {...dummyForm}>
+            <Card>
+              <CardHeader>
+                <CardTitle>Preferences</CardTitle>
+                <CardDescription>Customize your experience within the app.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-8">
+                  <div className="space-y-2">
+                      <Label>Theme</Label>
+                      <Select defaultValue="light">
+                          <SelectTrigger>
+                              <SelectValue placeholder="Select a theme" />
+                          </SelectTrigger>
+                          <SelectContent>
+                              <SelectItem value="light">Light</SelectItem>
+                              <SelectItem value="dark">Dark</SelectItem>
+                              <SelectItem value="system">System</SelectItem>
+                          </SelectContent>
+                      </Select>
+                      <p className="text-sm text-muted-foreground">Choose how you want the app to look.</p>
+                  </div>
+                   <div className="space-y-2">
+                      <Label>Language</Label>
+                      <Select defaultValue="en">
+                          <SelectTrigger>
+                              <SelectValue placeholder="Select a language" />
+                          </SelectTrigger>
+                          <SelectContent>
+                              <SelectItem value="en">English (United States)</SelectItem>
+                              <SelectItem value="es">Español (España)</SelectItem>
+                              <SelectItem value="fr">Français (France)</SelectItem>
+                          </SelectContent>
+                      </Select>
+                       <p className="text-sm text-muted-foreground">Select your preferred language for the app.</p>
+                  </div>
+                  <div className="space-y-4">
+                      <Label>Reminder Preferences</Label>
+                       <div className="flex items-center space-x-2">
+                          <Checkbox id="rem_before_30" defaultChecked/>
+                          <label htmlFor="rem_before_30" className="text-sm font-medium leading-none">30 minutes before appointment</label>
+                      </div>
+                       <div className="flex items-center space-x-2">
+                          <Checkbox id="rem_before_60" />
+                          <label htmlFor="rem_before_60" className="text-sm font-medium leading-none">1 hour before appointment</label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                          <Checkbox id="rem_before_day" defaultChecked />
+                          <label htmlFor="rem_before_day" className="text-sm font-medium leading-none">1 day before appointment</label>
+                      </div>
+                  </div>
+              </CardContent>
+            </Card>
+          </Form>
         </TabsContent>
       </Tabs>
     </div>
