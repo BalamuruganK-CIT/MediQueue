@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ArrowUpRight, CalendarPlus, PhoneOutgoing, BellRing, FileText, Stethoscope, MessageSquare } from "lucide-react"
+import { ArrowUpRight, CalendarPlus, PhoneOutgoing, BellRing, FileText, Stethoscope } from "lucide-react"
 import Link from "next/link"
 
 export default function PatientDashboard() {
@@ -44,16 +44,16 @@ export default function PatientDashboard() {
         </Card>
         <Card>
             <CardHeader>
-                <CardTitle>AI Symptom Checker</CardTitle>
-                <CardDescription>Get an AI-powered analysis of your symptoms.</CardDescription>
+                <CardTitle>View Prescriptions</CardTitle>
+                <CardDescription>Access your complete prescription history.</CardDescription>
             </CardHeader>
-            <CardContent>
-                 <MessageSquare className="h-16 w-16 text-primary" />
+            <CardContent className="flex flex-col items-center justify-center text-center">
+                <FileText className="h-16 w-16 text-primary" />
             </CardContent>
-             <CardFooter>
-                <Button className="w-full" asChild>
-                    <Link href="/dashboard/patient/symptom-analysis?role=patient">
-                        Start Analysis <ArrowUpRight className="ml-2 h-4 w-4" />
+            <CardFooter>
+                 <Button className="w-full" variant="outline" asChild>
+                    <Link href="/dashboard/patient/prescriptions?role=patient">
+                        View History
                     </Link>
                 </Button>
             </CardFooter>
@@ -74,23 +74,6 @@ export default function PatientDashboard() {
                 <Button className="w-full" variant="outline" asChild>
                     <Link href="/dashboard/patient/medication-reminders?role=patient">
                         Manage Reminders
-                    </Link>
-                </Button>
-            </CardFooter>
-        </Card>
-        <Card>
-            <CardHeader>
-                <CardTitle>View Prescriptions</CardTitle>
-                <CardDescription>Access your complete prescription history.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col items-center justify-center text-center">
-                <FileText className="h-20 w-20 text-primary mb-4" />
-                <p className="text-muted-foreground">You have 5 prescriptions on record.</p>
-            </CardContent>
-            <CardFooter>
-                 <Button className="w-full" variant="outline" asChild>
-                    <Link href="/dashboard/patient/prescriptions?role=patient">
-                        View History
                     </Link>
                 </Button>
             </CardFooter>

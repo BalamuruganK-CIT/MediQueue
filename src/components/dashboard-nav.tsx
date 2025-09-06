@@ -8,8 +8,7 @@ import {
   FileText,
   Users,
   Settings,
-  BellRing,
-  MessageSquare
+  BellRing
 } from "lucide-react"
 
 import {
@@ -33,7 +32,6 @@ const adminNavItems = [
 
 const patientNavItems = [
     { href: "/dashboard?role=patient", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/dashboard/patient/symptom-analysis?role=patient", label: "Symptom Analysis", icon: MessageSquare },
     { href: "/dashboard/patient/appointments?role=patient", label: "Appointments", icon: Calendar },
     { href: "/dashboard/patient/prescriptions?role=patient", label: "Prescriptions", icon: FileText },
     { href: "/dashboard/patient/medication-reminders?role=patient", label: "Reminders", icon: BellRing },
