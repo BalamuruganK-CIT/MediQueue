@@ -12,37 +12,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 
-export function UserNav() {
+function UserNavContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const role = searchParams.get('role');
+
+  const userName = role === 'doctor' ? 'Dr. Smith' : 'Admin User';
+  const userEmail = role === 'doctor' ? 'doctor@example.com' : 'admin@example.com';
   
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-9 w-9">
-            <AvatarImage src="https://picsum.photos/100" alt="@patient" data-ai-hint="person portrait" />
-            <AvatarFallback>P</AvatarFallback>
+            <AvatarImage src="https://picsum.photos/100" alt="@user" data-ai-hint="person portrait" />
+            <AvatarFallback>{role === 'doctor' ? 'D' : 'A'}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">Patient Name</p>
+            <p className="text-sm font-medium leading-none">{userName}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              patient@example.com
+              {userEmail}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href="/dashboard/settings">Settings</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/dashboard/billing">Billing</Link>
+            <Link href={`/dashboard/${role}/settings?role=${role}`}>Settings</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -52,4 +55,12 @@ export function UserNav() {
       </DropdownMenuContent>
     </DropdownMenu>
   )
+}
+
+export function UserNav() {
+    return (
+        <Suspense fallback={<div className="h-8 w-8 rounded-full bg-muted" />}>
+            <UserNavContent />
+        </Suspense>
+    )
 }

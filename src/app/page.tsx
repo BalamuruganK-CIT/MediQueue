@@ -6,15 +6,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [role, setRole] = useState("patient");
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // In a real application, you would handle authentication here.
-    // For this prototype, we'll just redirect to the dashboard.
-    router.push("/dashboard");
+    // For this prototype, we'll just redirect to the dashboard with the selected role.
+    router.push(`/dashboard?role=${role}`);
   };
 
   function Logo() {
@@ -64,7 +66,7 @@ export default function LoginPage() {
        <div className="mb-8">
         <Logo />
        </div>
-      <Tabs defaultValue="patient" className="w-[400px]">
+      <Tabs defaultValue="patient" className="w-[400px]" onValueChange={setRole}>
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="patient">Patient</TabsTrigger>
           <TabsTrigger value="doctor">Doctor</TabsTrigger>

@@ -1,16 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import {
   LayoutDashboard,
-  Stethoscope,
   Calendar,
-  History,
-  Bell,
-  Video,
-  BookOpen,
-  CreditCard,
+  FileText,
+  Users,
+  Building,
+  Settings,
 } from "lucide-react"
 
 import {
@@ -18,28 +16,40 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar"
+import { Suspense } from "react"
 
-const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/symptom-analysis", label: "Symptom Analysis", icon: Stethoscope },
-  { href: "/dashboard/appointments", label: "Appointments", icon: Calendar },
-  { href: "/dashboard/health-records", label: "Health Records", icon: History },
-  { href: "/dashboard/medication-reminders", label: "Medication Reminders", icon: Bell },
-  { href: "/dashboard/telemedicine", label: "Telemedicine", icon: Video },
-  { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
-  { href: "/dashboard/resource-library", label: "Resource Library", icon: BookOpen },
+const doctorNavItems = [
+  { href: "/dashboard?role=doctor", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard/doctor/appointments?role=doctor", label: "Appointments", icon: Calendar },
+  { href: "/dashboard/doctor/prescriptions?role=doctor", label: "Prescriptions", icon: FileText },
 ]
 
-export function DashboardNav() {
+const adminNavItems = [
+  { href: "/dashboard?role=admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard/admin/crowd-monitoring?role=admin", label: "Crowd Monitoring", icon: Users },
+  { href: "/dashboard/admin/patients?role=admin", label: "Patients", icon: Users },
+  { href: "/dashboard/admin/settings?role=admin", label: "Settings", icon: Settings },
+]
+
+function NavContent() {
   const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const role = searchParams.get("role")
+
+  const navItems = role === 'doctor' ? doctorNavItems : adminNavItems;
+
+  const checkActive = (href: string) => {
+    const [basePath] = href.split('?');
+    return pathname === basePath;
+  }
 
   return (
-    <SidebarMenu>
+     <SidebarMenu>
       {navItems.map((item) => (
         <SidebarMenuItem key={item.href}>
           <SidebarMenuButton
             asChild
-            isActive={pathname === item.href}
+            isActive={checkActive(item.href)}
             tooltip={item.label}
           >
             <Link href={item.href}>
@@ -50,5 +60,14 @@ export function DashboardNav() {
         </SidebarMenuItem>
       ))}
     </SidebarMenu>
+  )
+}
+
+
+export function DashboardNav() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <NavContent />
+    </Suspense>
   )
 }

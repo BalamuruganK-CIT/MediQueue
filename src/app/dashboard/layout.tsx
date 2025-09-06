@@ -52,7 +52,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-2" asChild>
             <Link href="/dashboard/settings">
-                <Settings />
+                <Settings className="h-4 w-4" />
                 <span>Settings</span>
             </Link>
           </Button>
