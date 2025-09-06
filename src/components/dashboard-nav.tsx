@@ -7,8 +7,9 @@ import {
   Calendar,
   FileText,
   Users,
-  Building,
   Settings,
+  BellRing,
+  MessageSquare
 } from "lucide-react"
 
 import {
@@ -31,16 +32,41 @@ const adminNavItems = [
   { href: "/dashboard/admin/settings?role=admin", label: "Settings", icon: Settings },
 ]
 
+const patientNavItems = [
+    { href: "/dashboard?role=patient", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/dashboard/patient/symptom-analysis?role=patient", label: "Symptom Analysis", icon: MessageSquare },
+    { href: "/dashboard/patient/appointments?role=patient", label: "Appointments", icon: Calendar },
+    { href: "/dashboard/patient/prescriptions?role=patient", label: "Prescriptions", icon: FileText },
+    { href: "/dashboard/patient/medication-reminders?role=patient", label: "Reminders", icon: BellRing },
+]
+
+function getNavItems(role: string | null) {
+    switch (role) {
+        case 'doctor':
+            return doctorNavItems;
+        case 'admin':
+            return adminNavItems;
+        case 'patient':
+            return patientNavItems;
+        default:
+            return patientNavItems; // Default to patient
+    }
+}
+
 function NavContent() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const role = searchParams.get("role")
 
-  const navItems = role === 'doctor' ? doctorNavItems : adminNavItems;
+  const navItems = getNavItems(role);
 
   const checkActive = (href: string) => {
     const [basePath] = href.split('?');
-    return pathname === basePath;
+    // The main dashboard page is a special case
+    if (basePath === '/dashboard') {
+      return pathname === basePath;
+    }
+    return pathname.startsWith(basePath);
   }
 
   return (

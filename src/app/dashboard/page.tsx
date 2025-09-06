@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, Suspense } from 'react';
 import DoctorDashboard from './doctor/page';
 import AdminDashboard from './admin/page';
+import PatientDashboard from './patient/page';
 
 function DashboardController() {
   const router = useRouter();
@@ -12,17 +13,21 @@ function DashboardController() {
 
   useEffect(() => {
     if (!role) {
-      // Default to admin if no role is specified, or redirect to login
-      router.push('/dashboard?role=admin');
+      // Default to patient if no role is specified, or redirect to login
+      router.push('/dashboard?role=patient');
     }
   }, [role, router]);
 
   if (role === 'doctor') {
     return <DoctorDashboard />;
   }
+
+  if (role === 'admin') {
+    return <AdminDashboard />;
+  }
   
-  // Default to admin dashboard
-  return <AdminDashboard />;
+  // Default to patient dashboard
+  return <PatientDashboard />;
 }
 
 
