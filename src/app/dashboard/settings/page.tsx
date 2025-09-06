@@ -37,6 +37,8 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 const defaultValues: Partial<ProfileFormValues> = {
   name: "Patient Name",
   email: "patient@example.com",
+  phone: "",
+  address: "",
 }
 
 export default function SettingsPage() {
@@ -78,8 +80,8 @@ export default function SettingsPage() {
                 <AvatarFallback>P</AvatarFallback>
               </Avatar>
               <div>
-                <CardTitle>{form.getValues("name")}</CardTitle>
-                <CardDescription>{form.getValues("email")}</CardDescription>
+                <CardTitle>{form.watch("name")}</CardTitle>
+                <CardDescription>{form.watch("email")}</CardDescription>
               </div>
             </CardHeader>
             <CardContent>
@@ -156,21 +158,21 @@ export default function SettingsPage() {
               <CardContent className="space-y-6">
                   <div className="flex flex-row items-center justify-between rounded-lg border p-4">
                       <div className="space-y-0.5">
-                          <FormLabel className="text-base">Email Notifications</FormLabel>
+                          <FormLabel>Email Notifications</FormLabel>
                           <FormDescription>Receive updates about appointments and reminders via email.</FormDescription>
                       </div>
                       <Switch />
                   </div>
                    <div className="flex flex-row items-center justify-between rounded-lg border p-4">
                       <div className="space-y-0.5">
-                          <FormLabel className="text-base">Push Notifications</FormLabel>
+                          <FormLabel>Push Notifications</FormLabel>
                           <FormDescription>Get real-time alerts on your mobile device.</FormDescription>
                       </div>
                       <Switch defaultChecked/>
                   </div>
                    <div className="flex flex-row items-center justify-between rounded-lg border p-4">
                       <div className="space-y-0.5">
-                          <FormLabel className="text-base">Monthly Newsletter</FormLabel>
+                          <FormLabel>Monthly Newsletter</FormLabel>
                           <FormDescription>Stay up-to-date with the latest health news and tips.</FormDescription>
                       </div>
                       <Switch />
@@ -238,3 +240,5 @@ export default function SettingsPage() {
     </div>
   )
 }
+
+    
