@@ -37,6 +37,7 @@ const patientNavItems = [
     { href: "/dashboard/patient/prescriptions?role=patient", label: "Prescriptions", icon: FileText },
     { href: "/dashboard/patient/billing?role=patient", label: "Billing", icon: CreditCard },
     { href: "/dashboard/patient/medication-reminders?role=patient", label: "Reminders", icon: BellRing },
+    { href: "/dashboard/patient/crowd-status?role=patient", label: "Crowd Status", icon: Users },
 ]
 
 function getNavItems(role: string | null) {
