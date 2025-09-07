@@ -3,9 +3,11 @@
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Users } from "lucide-react"
+import { Users, Save } from "lucide-react"
 import { Slider } from "@/components/ui/slider"
 import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { useToast } from "@/hooks/use-toast"
 
 const initialCrowdData = [
     { department: 'Emergency Room', level: 90, status: 'High' },
@@ -17,6 +19,7 @@ const initialCrowdData = [
 
 export default function CrowdMonitoringPage() {
   const [crowdData, setCrowdData] = useState(initialCrowdData);
+  const { toast } = useToast();
 
   const getIndicatorColor = (level: number) => {
     if (level > 80) return 'bg-destructive';
@@ -40,11 +43,26 @@ export default function CrowdMonitoringPage() {
     );
   };
 
+  const handleSaveChanges = () => {
+    // In a real application, you would send this data to your backend.
+    // For this prototype, we'll just show a confirmation.
+    toast({
+      title: "Changes Saved!",
+      description: "The crowd levels have been successfully updated.",
+    });
+  };
+
   return (
     <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Crowd Management</h1>
-        <p className="text-muted-foreground">Adjust real-time crowd levels across different hospital departments.</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Crowd Management</h1>
+          <p className="text-muted-foreground">Adjust real-time crowd levels across different hospital departments.</p>
+        </div>
+        <Button onClick={handleSaveChanges}>
+            <Save className="mr-2 h-4 w-4" />
+            Save Changes
+        </Button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
